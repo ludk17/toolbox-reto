@@ -7,26 +7,30 @@ function App() {
   const [fileName, setFileName] = useState("");
   const [files, setFiles] = useState([]);
 
+  const buildFiles = (data) => {
+    let newFiles = [];
+    for (const file of data) {
+      newFiles = newFiles.concat(
+        file.lines.map((line, index) => {
+          return {
+            key: file.file + index,
+            name: file.file,
+            text: line.text,
+            number: line.number,
+            hex: line.hex,
+          };
+        })
+      );
+    }
+    return newFiles;
+  };
+
   useEffect(() => {
     fetch(
       `${process.env.REACT_APP_BASE_API_URL}/files/data?fileName=${fileName}`
     ).then(async (res) => {
       const data = await res.json();
-      let newFiles = [];
-      for (const file of data) {
-        newFiles = newFiles.concat(
-          file.lines.map((line, index) => {
-            return {
-              key: file.file + index,
-              name: file.file,
-              text: line.text,
-              number: line.number,
-              hex: line.hex,
-            };
-          })
-        );
-      }
-      setFiles(newFiles);
+      setFiles(buildFiles(data));
     });
   }, [fileName]);
 
