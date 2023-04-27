@@ -1,4 +1,3 @@
-import createError from "http-errors";
 import express, { json, urlencoded } from "express";
 import cookieParser from "cookie-parser";
 import cors from "cors";
@@ -20,11 +19,6 @@ app.use(urlencoded({ extended: false }));
 app.use(cookieParser());
 
 app.use("/", filesRouter);
-
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  next(createError(404));
-});
 
 // error handler
 app.use(function (err, req, res, next) {

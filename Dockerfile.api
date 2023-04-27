@@ -1,0 +1,15 @@
+FROM node:16
+
+# Create app directory
+WORKDIR /app
+
+# Copy api folder
+COPY api ./
+
+# Install dependecies
+RUN npm install --only=production
+
+
+EXPOSE 4000
+
+CMD ["npm", "start"]

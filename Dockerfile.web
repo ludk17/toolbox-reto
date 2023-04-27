@@ -1,0 +1,21 @@
+FROM node:16 as builder
+
+# Create app directory
+WORKDIR /app
+
+# Copy api folder
+COPY web ./
+
+# Install dependecies
+RUN npm install
+
+# Build staic web
+RUN npm run build
+
+FROM nginx
+
+COPY --from=builder /app/build /usr/share/nginx/html
+
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]
