@@ -1,3 +1,6 @@
+frontend : default port 8000
+backend: default port 4000
+
 ```
-docker build -f Dockerfile.api -t toolbox-api:1.0.0 .
+docker-compose up --build
 ```
